@@ -2,9 +2,9 @@ import numpy as np
 import time
 import argparse
 
+# python sticks.py --type both  --pile 50
 
 mem = np.full(1, float("inf"))
-
 def take(pile, turns, cur):
     if cur > pile:
         return float("inf")    
@@ -64,13 +64,14 @@ def DP(pile):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Description of your script')
+    parser = argparse.ArgumentParser(description='''Implemtation of 
+    "taking sticks" algorithm using a naive recursive solution and a dynamic programming solution''')
     parser.add_argument('--type', help='DP, rec, both')
     parser.add_argument('--pile', help='Integer amount')
     args = parser.parse_args()
 
+    pile=35
     if(args.type):
-        pile=35
         if args.pile:
             pile=int(args.pile)
             mem = np.full(pile+1, float("inf"))
@@ -81,4 +82,4 @@ if __name__ == "__main__":
         if args.type=="both":
             both(pile)
     else:
-        both(50)
+        both(pile)
