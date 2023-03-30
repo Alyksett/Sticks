@@ -64,7 +64,7 @@ def DP(pile):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='''Implemtation of 
+    parser = argparse.ArgumentParser(description='''Implementation of 
     "taking sticks" algorithm using a naive recursive solution and a dynamic programming solution''')
     parser.add_argument('--type', help='DP, rec, both')
     parser.add_argument('--pile', help='Integer amount')
