@@ -15,34 +15,36 @@ def take(pile, turns, cur):
         return res
 
 def takeDP(pile, turns, cur):
+    global c
     if cur > pile:
-        return (float("inf"),0)
+        return (float("inf"),mem)
     if mem[cur] != float("inf"):
-        return (mem[cur],0)
+        return (mem[cur],mem)
     if cur == pile:
-        return (turns,0)
+        return (turns,mem)
     else: 
         res =  1 + min(takeDP(pile, turns, cur+9)[0], takeDP(pile, turns,cur+7)[0], takeDP(pile, turns, cur+1)[0])
         if res < mem[cur]:
-            # print(f"Min: {res}, Old Table: {mem[cur]}")
             mem[cur] = res 
         return (res, mem)
     
 def both(pile):
+    global mem
     start = time.monotonic()
-    correct = []
+    rec=[]
     for i in range(pile):
-        correct.append(take(i,0, 0))
+        rec.append(take(i,0, 0))
     end = time.monotonic()
-    print(f"Recursive took {end-start}s")
+    print(f"Recursive: \t{end-start}s")
 
+    dp=[]
     start = time.monotonic()
     for i in range(pile):
-        if correct[i] != int(takeDP(i, 0, 0)[0]): 
-            print(f"Mismatch at {i}.\n\tExpected: {correct[i]}, Got: {takeDP(i, 0, 0)[0]}")
-            
+        mem = np.full(i+1, float("inf"))
+        dp.append(takeDP(i, 0, 0)[0])
     end = time.monotonic()
-    print(f"DP took {end-start}s")
+    print(f"DP: \t\t{end-start}s")
+    print(list(set(rec) - set(dp)))
 
 def rec(pile):
     start = time.monotonic()
@@ -51,12 +53,14 @@ def rec(pile):
     print(f"Recursive took {end-start}s")
 
 def DP(pile):
+    global mem
     start = time.monotonic()
     mem = np.full(pile+1, float("inf"))
-    table = takeDP(pile, 0, 0)[1]
+    res = takeDP(pile, 0, 0)
     end = time.monotonic()
     print(f"DP took {end-start}s")
-    print(table)
+    print(f"Result: {res[0]}")
+    print(f"\nTable: {res[1]}")
 
 
 if __name__ == "__main__":
